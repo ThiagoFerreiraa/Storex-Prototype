@@ -1,0 +1,21 @@
+.modal_users{
+    width: max-content;
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 4%;
+    padding: 2%;
+    box-shadow: -3px 7px 26px -9px;
+    border-radius: 10%;
+    background-color: #78C4B8;
+}
+
+.modal_buttons_users{
+    display: flex;
+    justify-content:space-between;
+}
+
+.grid{
+    display: flex;
+}

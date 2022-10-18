@@ -1,0 +1,12 @@
+C:\Users\Thiago\Documents\Projects\Storex\StorexWebAPI\DataBaseConnection\bin\Debug\net6.0\DataBaseConnection.deps.json
+C:\Users\Thiago\Documents\Projects\Storex\StorexWebAPI\DataBaseConnection\bin\Debug\net6.0\DataBaseConnection.dll
+C:\Users\Thiago\Documents\Projects\Storex\StorexWebAPI\DataBaseConnection\bin\Debug\net6.0\DataBaseConnection.pdb
+C:\Users\Thiago\Documents\Projects\Storex\StorexWebAPI\DataBaseConnection\obj\Debug\net6.0\DataBaseConnection.csproj.AssemblyReference.cache
+C:\Users\Thiago\Documents\Projects\Storex\StorexWebAPI\DataBaseConnection\obj\Debug\net6.0\DataBaseConnection.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Thiago\Documents\Projects\Storex\StorexWebAPI\DataBaseConnection\obj\Debug\net6.0\DataBaseConnection.AssemblyInfoInputs.cache
+C:\Users\Thiago\Documents\Projects\Storex\StorexWebAPI\DataBaseConnection\obj\Debug\net6.0\DataBaseConnection.AssemblyInfo.cs
+C:\Users\Thiago\Documents\Projects\Storex\StorexWebAPI\DataBaseConnection\obj\Debug\net6.0\DataBaseConnection.csproj.CoreCompileInputs.cache
+C:\Users\Thiago\Documents\Projects\Storex\StorexWebAPI\DataBaseConnection\obj\Debug\net6.0\DataBaseConnection.dll
+C:\Users\Thiago\Documents\Projects\Storex\StorexWebAPI\DataBaseConnection\obj\Debug\net6.0\refint\DataBaseConnection.dll
+C:\Users\Thiago\Documents\Projects\Storex\StorexWebAPI\DataBaseConnection\obj\Debug\net6.0\DataBaseConnection.pdb
+C:\Users\Thiago\Documents\Projects\Storex\StorexWebAPI\DataBaseConnection\obj\Debug\net6.0\ref\DataBaseConnection.dll

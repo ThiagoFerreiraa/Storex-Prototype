@@ -1,0 +1,34 @@
+.main_grid{
+    width: 100%;
+    height: 100%;
+    background-color: #67A89D;
+}
+
+.line1{
+    width: 100%;
+    height: 45%;
+}
+
+.line1 > div{
+    width: 90%;
+    height: 100%;
+    border-radius: 1rem;
+    box-shadow: 1px 1px 13px -7px;
+    margin: auto;
+}
+
+
+.line2{
+    width: 90%;
+    height: 47%;
+    margin: 1rem auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.line2 > div{
+    width: 49%;
+    height: 90%;
+    border-radius: 1rem;
+    box-shadow: 1px 1px 13px -7px;
+}

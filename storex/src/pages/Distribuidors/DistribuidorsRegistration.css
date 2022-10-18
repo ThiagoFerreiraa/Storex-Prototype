@@ -1,0 +1,73 @@
+.session_register{
+    display: flex;
+    background-color:#67A89D ;
+}
+
+#title{
+    margin-top: 2rem;
+    color: #95F5E5;
+}
+
+form .txt_field {
+    position: relative;
+    width: 80%;
+    border-bottom: 2px solid #6EB5A9;
+    margin: 30px auto;
+}
+
+.txt_field label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #95F5E5;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.txt_field span::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #f1f1f1;
+    transition: .5s;
+}
+
+.txt_field input:focus ~ label,
+.txt_field input:valid ~ label{
+  top: -5px;
+  color: #f1f1f1;
+}
+
+.txt_field input:focus ~ span::before,
+.txt_field input:valid ~ span::before{
+  width: 100%;
+}
+
+.form_session{
+    width: 86%;
+}
+
+#userForm{
+    box-shadow: -3px 7px 26px -9px;
+    width: 80%;
+    padding: 2rem;
+    background-color: #406962;
+    border-radius: 3rem; 
+}
+
+.btn_save{
+    color: #95F5E5;
+    background:none;
+    border-color: #95F5E5;
+}
+
+.btn_save:hover{
+    color: #121212;
+    background-color:#95F5E5;
+    border-color:#95F5E5 ;
+}

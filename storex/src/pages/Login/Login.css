@@ -1,0 +1,96 @@
+.background_video{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    background-color: rgba(169,169,169,0.2);
+}
+
+.login_div {
+    width: 50%;
+    border: 1px solid rgba(0, 0, 0, .3);
+    box-shadow: 6px 6px 20px black;
+    border-radius: 2rem;
+    /* background-color: #fafafa; */
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 3rem;
+}
+
+form .txt_field_login {
+    position: relative;
+    width: 80%;
+    border-bottom: 2px solid #000000;
+    margin: 30px auto;
+}
+
+.txt_field_login input {
+    width: 100%;
+    padding: 0 5px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.txt_field_login label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #000000;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.txt_field_login span::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #005C53;
+    transition: .5s;
+}
+
+.txt_field_login input:focus ~ label,
+.txt_field_login input:valid ~ label{
+  top: -5px;
+  color: #005C53;
+}
+
+.txt_field_login input:focus ~ span::before,
+.txt_field_login input:valid ~ span::before{
+  width: 100%;
+}
+
+.login_div h1 {
+    text-align: center;
+}
+
+.button_login {
+    margin-top: 2rem;
+    background-color: #005C53;
+    border: none;
+}
+
+.button_login:hover{
+    background-color: #147e73;
+}
+
+.button_login:focus{
+    background-color: #147e73;
+}
+
+/*Loading */
+
+.loader_container{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.834);
+    z-index: 1;
+}
