@@ -8,5 +8,6 @@
         public string Email { get; set; } = string.Empty;
         public string Telephone { get; set; } = string.Empty;
         public DateTime IncludeDate { get; set; }
+        public string? Guid { get; set; } = new Guid().ToString();
     }
 }
