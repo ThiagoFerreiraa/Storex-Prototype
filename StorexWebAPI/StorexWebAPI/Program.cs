@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using StorexWebAPI;
 using StorexWebAPI.Data;
+using StorexWebAPI.Repository;
 using StorexWebAPI.Services;
 using System.Text;
 
@@ -15,6 +16,7 @@ builder.Services.AddCors(c =>
 {
     c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
+
 
 //JSON Serializer
 builder.Services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft
@@ -57,6 +59,7 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("StorexConnection"));
 });
 
+builder.Services.AddScoped<UnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IClientService, ClientService>();
