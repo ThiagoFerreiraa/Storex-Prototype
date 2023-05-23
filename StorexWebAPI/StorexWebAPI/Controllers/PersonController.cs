@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StorexWebAPI.Models;
 using StorexWebAPI.Services;
+using StorexWebAPI.Repository;
 
 namespace StorexWebAPI.Controllers
 {
@@ -9,133 +10,161 @@ namespace StorexWebAPI.Controllers
     [Produces("application/json")]
     public class PersonController : ControllerBase
     {
-        private readonly IPersonService _personService;
-        public PersonController(IPersonService personService)
+        private readonly UnitOfWork _unitOfWork;
+        public PersonController(UnitOfWork uow)
         {
-            _personService = personService;
+            _unitOfWork = uow;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IAsyncEnumerable<Person>>> GetPeople()
+        public async Task<ActionResult<ServiceResponse<List<Person>>>> GetAll()
         {
+            var response = new ServiceResponse<List<Person>>();
             try
             {
-                var people = await _personService.GetPeople();
-
-                return Ok(people);
+                var people = await _unitOfWork.Personpository.GetAllAsync();
+                if (people is null)
+                {
+                    response.SuccessResponse(message: "Anybody has been found!");
+                }
+                else
+                {
+                    response.SuccessResponse(data: people.ToList());
+                }
             }
-            catch
+            catch(Exception e)
             {
                 //return BadRequest("");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error to find people !");
+                //return StatusCode(StatusCodes.Status500InternalServerError, "Error to find people !");
+                response.FailResponse(message: e.Message);
             }
+            return response.IsFail() ? BadRequest(response) : Ok(response);
         }
 
         [HttpGet]
         [Route("FindPersonByName")]
-        public async Task<ActionResult<IAsyncEnumerable<Person>>> GetPersonByName([FromQuery] string name)
+        public async Task<ActionResult<ServiceResponse<Person>>> GetByName([FromQuery] string name)
         {
+            var response = new ServiceResponse<Person>();
             try
             {
-                var people = await _personService.GetPersonByName(name);
-                if (people == null)
+                Person? people = (await _unitOfWork.Personpository.GetAllAsync())?
+                    .FirstOrDefault(person => person.Name.Equals(name));
+                if (people is null)
                 {
-                    return NotFound($"Do not exist person with this name {name}");
+                    response.SuccessResponse(message: $"Do not exist person with this name {name}");
                 }
-
-                return Ok(people);
+                else
+                {
+                    response.SuccessResponse(data: people);
+                }
             }
-            catch
+            catch(Exception e)
             {
-
-                return BadRequest("Error to find specific person ");
+                response.FailResponse(message: e.Message);
             }
+
+            return response.IsFail()? BadRequest(response) : Ok(response);
         }
 
         [HttpGet]
         [Route("FindPersonByID/{id:int}", Name = "GetPerson")]
-        public async Task<ActionResult<IAsyncEnumerable<Person>>> GetPersonByID(int id)
+        public async Task<ActionResult<ServiceResponse<Person>>> GetByID(int id)
         {
+            var response = new ServiceResponse<Person>();
             try
             {
-                var person = await _personService.GetPerson(id);
-                if (person == null)
-                    return NotFound($"Not found person with ID {id}");
-
-                return Ok(person);
+                var person = await _unitOfWork.Personpository.GetByIdAsync(id);
+                if (person is null)
+                {
+                    response.SuccessResponse(message: $"Anyone has ben found with this ID: ${id}");
+                }
+                else
+                {
+                    response.SuccessResponse(data: person);
+                }
             }
-            catch
+            catch(Exception e)
             {
-
-                return BadRequest("Not Found Object Person");
+                response.FailResponse(message: e.Message);
             }
+
+            return response.IsFail() ? BadRequest(response) : Ok(response);
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreatePerson(Person person)
+        public async Task<ActionResult<ServiceResponse<bool>>> Create(Person person)
         {
+            var response = new ServiceResponse<bool>();
             try
             {
-                await _personService.CreatePerson(person);
-                //return CreatedAtRoute(nameof(GetPersonByID), new { id = person.Id, person});
-
-                return Ok($"Person add success {person.Id}");
+                string guid = new Guid().ToString();
+                person.Guid = guid;
+                await _unitOfWork.Personpository.InsertAsync(person);
+                Person createdPerson = (await _unitOfWork.Personpository.GetAllAsync())!
+                    .FirstOrDefault(person => person.Guid == guid)!;
+              
+                response.SuccessResponse(message: $"Person add success {person.Id}");
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                return BadRequest($"Error");
+                response.FailResponse(message: e.Message);
             }
+
+            return response.IsFail() ? BadRequest(response) : Ok(response);
         }
 
         [HttpPut]
         [Route ("UpdatePerson")]
-        public async Task<ActionResult> UpdatePerson(int id, [FromBody] Person person)
+        public ActionResult<ServiceResponse<bool>> Update(int id, [FromBody] Person person)
         {
+            var response = new ServiceResponse<bool>();
             try
             {
                 if(person.Id == id)
                 {
-                    await _personService.UpdatePerson(person);
-
-                    return Ok($"Update person realize with success, id {id}");
-
+                    _unitOfWork.Personpository.Update(person);
+                    response.SuccessResponse();
                 }
                 else
                 {
-                    return BadRequest("Incomplete Data");
+                    response.FailResponse(message: "Invalid data");
                 }
             }
-            catch 
+            catch (Exception e)
             {
-                return BadRequest("Incomplete Data");
+                response.FailResponse(message: e.Message);
             }
+
+            return response.IsFail() ? BadRequest(response) : Ok(response);
         }
 
         [HttpDelete]
         [Route("DeletePerson")]
-        public async Task<ActionResult> DeletePerson(int id)
+        public async Task<ActionResult<ServiceResponse<bool>>> DeletePerson(int id)
         {
+            var response = new ServiceResponse<bool>();
             try
             {
-                var person = await _personService.GetPerson(id);
+                var person = await _unitOfWork.Personpository.GetByIdAsync(id);
 
-                if (person != null)
+                if (person is not null)
                 {
-                    await _personService.DeletePerson(person);
-
-                    return Ok($"This person was deleted");
+                    _unitOfWork.Personpository.Delete(person);
+                    response.SuccessResponse(message: "This person was deleted");
                 }
                 else
                 {
-                    return BadRequest($"Person not found , id {id}");
+                    response.FailResponse(message: $"Person not found, id {id}");
                 }
             }
-            catch
+            catch(Exception e)
             {
-                return BadRequest("Incomplete Data");
+                response.FailResponse(message: e.Message);
             }
+
+            return response.IsFail() ? BadRequest(response) : Ok(response);
         }
     }
 }
