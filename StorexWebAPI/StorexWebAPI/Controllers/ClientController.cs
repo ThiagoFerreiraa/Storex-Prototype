@@ -19,7 +19,7 @@ namespace StorexWebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Client>>> GetClients()
+        public async Task<ActionResult<ServiceResponse<List<Client>>>> GetAll()
         {
             var response = new ServiceResponse<List<Client>>();
             try
@@ -42,7 +42,7 @@ namespace StorexWebAPI.Controllers
 
             if (response.IsFail())
             {
-                return BadRequest();
+                return BadRequest(response);
             }
             return Ok(response);
         }
